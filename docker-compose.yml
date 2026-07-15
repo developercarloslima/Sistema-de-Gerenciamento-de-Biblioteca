@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: library_db
+      POSTGRES_USER: ${DB_USERNAME:-library}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-library}
+    ports:
+      - "5432:5432"
+    volumes:
+      - library_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-library} -d library_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/library_db
+      DB_USERNAME: ${DB_USERNAME:-library}
+      DB_PASSWORD: ${DB_PASSWORD:-library}
+      APP_JWT_SECRET: ${APP_JWT_SECRET:-change-this-development-secret-with-at-least-32-characters}
+      ADMIN_NAME: ${ADMIN_NAME:-Administrador}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@library.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-Admin@123456}
+    ports:
+      - "8080:8080"
+
+volumes:
+  library_postgres_data:

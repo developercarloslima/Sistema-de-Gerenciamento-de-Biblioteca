@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: library-management-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/library_db}
+    username: ${DB_USERNAME:library}
+    password: ${DB_PASSWORD:library}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+app:
+  security:
+    jwt:
+      secret: ${APP_JWT_SECRET:change-this-development-secret-with-at-least-32-characters}
+      access-minutes: ${JWT_ACCESS_MINUTES:30}
+      refresh-days: ${JWT_REFRESH_DAYS:7}
+  library:
+    default-loan-days: ${DEFAULT_LOAN_DAYS:14}
+    max-renewals: ${MAX_RENEWALS:2}
+    reservation-hold-hours: ${RESERVATION_HOLD_HOURS:48}
+    due-soon-days: ${DUE_SOON_DAYS:2}
+    daily-fine: ${DAILY_FINE:2.00}
+    max-unpaid-fine: ${MAX_UNPAID_FINE:20.00}
+  scheduler:
+    deadlines-cron: ${DEADLINES_CRON:0 0 8 * * *}
+    zone: ${SCHEDULER_ZONE:America/Maceio}
+  bootstrap:
+    admin-name: ${ADMIN_NAME:Administrador}
+    admin-email: ${ADMIN_EMAIL:admin@library.local}
+    admin-password: ${ADMIN_PASSWORD:Admin@123456}
+
+logging:
+  level:
+    org.springframework.security: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never

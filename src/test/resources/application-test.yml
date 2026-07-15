@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:library;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  flyway:
+    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+app:
+  security:
+    jwt:
+      secret: test-secret-with-more-than-thirty-two-characters-123
+  scheduler:
+    deadlines-cron: "-"

@@ -1,0 +1,28 @@
+package com.carlos.library.repository;
+
+import com.carlos.library.domain.entity.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.UUID;
+
+public interface BookRepository extends JpaRepository<Book, UUID> {
+    boolean existsByIsbn(String isbn);
+
+    @Query("""
+        select b from Book b
+        where b.active = true
+          and (:query is null or lower(b.title) like lower(concat('%', :query, '%'))
+               or lower(b.author) like lower(concat('%', :query, '%'))
+               or lower(b.isbn) like lower(concat('%', :query, '%')))
+          and (:category is null or lower(b.category) = lower(:category))
+          and (:availableOnly = false or exists (
+              select c.id from BookCopy c where c.book = b and c.status = com.carlos.library.domain.enums.BookCopyStatus.AVAILABLE
+          ))
+        """)
+    Page<Book> search(@Param("query") String query, @Param("category") String category,
+                      @Param("availableOnly") boolean availableOnly, Pageable pageable);
+}
