@@ -22,8 +22,9 @@ public class BookController {
     Page<BookResponse> search(@RequestParam(required=false) String query,
                               @RequestParam(required=false) String category,
                               @RequestParam(defaultValue="false") boolean availableOnly,
+                              @RequestParam(defaultValue="false") boolean digitalOnly,
                               Pageable pageable) {
-        return service.search(query, category, availableOnly, pageable);
+        return service.search(query, category, availableOnly, digitalOnly, pageable);
     }
 
     @GetMapping("/{id}") BookResponse get(@PathVariable UUID id) { return service.get(id); }

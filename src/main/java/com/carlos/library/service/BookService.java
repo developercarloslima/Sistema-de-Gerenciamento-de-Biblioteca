@@ -37,10 +37,10 @@ public class BookService {
     }
 
     @Transactional(readOnly = true)
-    public Page<BookResponse> search(String query, String category, boolean availableOnly, Pageable pageable) {
+    public Page<BookResponse> search(String query, String category, boolean availableOnly, boolean digitalOnly, Pageable pageable) {
         String q = blankToNull(query);
         String c = blankToNull(category);
-        return books.search(q, c, availableOnly, pageable).map(mapper::book);
+        return books.search(q, c, availableOnly, digitalOnly, pageable).map(mapper::book);
     }
 
     @Transactional(readOnly = true)

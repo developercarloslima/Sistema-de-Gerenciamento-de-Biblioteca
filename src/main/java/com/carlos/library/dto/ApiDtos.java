@@ -4,6 +4,7 @@ import com.carlos.library.domain.enums.*;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -30,7 +31,8 @@ public final class ApiDtos {
                               @Size(max=5000) String description) {}
     public record BookResponse(UUID id, String title, String isbn, String author, String publisher,
                                Integer publicationYear, String category, String description, boolean active,
-                               long totalCopies, long availableCopies, OffsetDateTime createdAt) {}
+                               long totalCopies, long availableCopies, boolean hasDigitalFile, boolean hasCover,
+                               OffsetDateTime createdAt) {}
     public record BookCopyRequest(@NotBlank @Size(max=40) String inventoryCode, @NotNull LocalDate acquisitionDate) {}
     public record BookCopyStatusRequest(@NotNull BookCopyStatus status) {}
     public record BookCopyResponse(UUID id, UUID bookId, String bookTitle, String inventoryCode,
@@ -62,6 +64,25 @@ public final class ApiDtos {
 
     public record NotificationResponse(UUID id, String title, String message, NotificationType type,
                                        boolean read, UUID referenceId, OffsetDateTime createdAt) {}
+
+    public record AssetUploadRequest(@NotNull BookAssetType assetType, @NotBlank @Size(max=255) String filename,
+                                     @NotBlank @Size(max=100) String contentType, @Positive long fileSize,
+                                     @NotNull DigitalAccessLevel accessLevel, boolean downloadAllowed,
+                                     @AssertTrue(message = "Confirme que possui autorização para distribuir o arquivo.")
+                                     boolean rightsConfirmed) {}
+    public record AssetUploadResponse(UUID uploadSessionId, BookAssetType assetType, String uploadUrl,
+                                      String method, Map<String, String> requiredHeaders, OffsetDateTime expiresAt,
+                                      long maxPdfBytes, long maxCoverBytes) {}
+    public record BookAssetResponse(UUID id, UUID bookId, BookAssetType assetType, String originalFilename,
+                                    String contentType, long fileSize, String etag, DigitalAccessLevel accessLevel,
+                                    boolean downloadAllowed, String uploadedBy, OffsetDateTime createdAt,
+                                    OffsetDateTime updatedAt) {}
+    public record AssetAccessResponse(UUID assetId, BookAssetType assetType, String url, OffsetDateTime expiresAt,
+                                      String contentType, String filename, boolean downloadAllowed) {}
+    public record ReadingProgressRequest(@Min(1) int currentPage, @Min(1) int totalPages, boolean completed) {}
+    public record ReadingProgressResponse(UUID id, UUID bookId, int currentPage, int totalPages,
+                                          BigDecimal percentage, boolean completed, OffsetDateTime firstAccessedAt,
+                                          OffsetDateTime lastAccessedAt) {}
 
     public record MessageResponse(String message) {}
 }

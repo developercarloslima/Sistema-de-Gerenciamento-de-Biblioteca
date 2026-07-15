@@ -1,9 +1,14 @@
+# syntax=docker/dockerfile:1.7
+
 FROM maven:3.9.11-eclipse-temurin-21 AS build
 WORKDIR /app
+
 COPY pom.xml .
-RUN mvn -q -DskipTests dependency:go-offline
 COPY src ./src
-RUN mvn -q clean package -DskipTests
+
+# O cache mantém as dependências Maven entre builds e os logs ficam visíveis.
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn -B -ntp clean package -DskipTests
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app

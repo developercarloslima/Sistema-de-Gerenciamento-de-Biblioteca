@@ -3,6 +3,7 @@ package com.carlos.library.controller;
 import com.carlos.library.dto.ApiDtos.MessageResponse;
 import com.carlos.library.service.LoanService;
 import com.carlos.library.service.ReservationService;
+import com.carlos.library.service.DigitalBookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class MaintenanceController {
     private final LoanService loans;
     private final ReservationService reservations;
+    private final DigitalBookService digitalBooks;
 
     @PostMapping("/process-deadlines")
     MessageResponse processDeadlines() {
         loans.processDeadlines();
         reservations.expireReadyReservations();
-        return new MessageResponse("Prazos, atrasos e reservas expiradas foram processados.");
+        digitalBooks.expirePendingUploads();
+        return new MessageResponse("Prazos, atrasos, reservas e uploads expirados foram processados.");
     }
 }

@@ -2,8 +2,10 @@ package com.carlos.library.service;
 
 import com.carlos.library.domain.entity.*;
 import com.carlos.library.domain.enums.BookCopyStatus;
+import com.carlos.library.domain.enums.BookAssetType;
 import com.carlos.library.dto.ApiDtos.*;
 import com.carlos.library.repository.BookCopyRepository;
+import com.carlos.library.repository.BookAssetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +13,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class MapperService {
     private final BookCopyRepository copies;
+    private final BookAssetRepository assets;
 
     public BookResponse book(Book b) {
         return new BookResponse(b.getId(), b.getTitle(), b.getIsbn(), b.getAuthor(), b.getPublisher(),
                 b.getPublicationYear(), b.getCategory(), b.getDescription(), b.isActive(),
                 copies.countByBookId(b.getId()), copies.countByBookIdAndStatus(b.getId(), BookCopyStatus.AVAILABLE),
-                b.getCreatedAt());
+                assets.existsByBookIdAndAssetType(b.getId(), BookAssetType.PDF),
+                assets.existsByBookIdAndAssetType(b.getId(), BookAssetType.COVER), b.getCreatedAt());
     }
 
     public BookCopyResponse copy(BookCopy c) {
