@@ -29,6 +29,8 @@ springdoc:
 
 app:
   security:
+    cors:
+      allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
     jwt:
       secret: ${APP_JWT_SECRET:change-this-development-secret-with-at-least-32-characters}
       access-minutes: ${JWT_ACCESS_MINUTES:30}
