@@ -2,97 +2,148 @@
 
 # 📚 Library Management API
 
-API REST para gerenciamento completo de bibliotecas, com autenticação JWT, controle de acesso por perfis, empréstimos, reservas, multas, notificações e persistência em PostgreSQL.
+### Sistema back-end para gerenciamento completo de bibliotecas
 
-![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![JWT](https://img.shields.io/badge/Security-JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+API REST desenvolvida com **Java e Spring Boot**, com autenticação JWT, controle de acesso por perfis, empréstimos, devoluções, reservas, multas, notificações e persistência em PostgreSQL.
+
+[![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![JWT](https://img.shields.io/badge/Security-JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
+[![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
+[![Neon](https://img.shields.io/badge/Database-Neon-00E599?style=for-the-badge&logo=postgresql&logoColor=black)](https://neon.tech/)
 
 </div>
 
 ---
 
+## 🌐 Demonstração em produção
+
+| Recurso | Endereço |
+|---|---|
+| **Swagger UI** | [Abrir documentação interativa](https://library-management-api-pcjj.onrender.com/swagger-ui/index.html) |
+| **Health Check** | [Verificar status da API](https://library-management-api-pcjj.onrender.com/actuator/health) |
+| **OpenAPI JSON** | [Visualizar especificação](https://library-management-api-pcjj.onrender.com/v3/api-docs) |
+| **URL base da API** | [URL Oficial da API](https://library-management-api-pcjj.onrender.com) |
+
+> [!NOTE]
+> A aplicação está hospedada no plano gratuito do Render. Após um período sem acessos, o serviço pode entrar em suspensão. A primeira requisição seguinte poderá levar alguns segundos para responder.
+
+---
+
 ## 📌 Sobre o projeto
 
-O **Library Management API** é um sistema back-end desenvolvido para representar operações reais de uma biblioteca. O projeto centraliza o gerenciamento de livros, exemplares físicos, membros, empréstimos, devoluções, renovações, reservas, multas e notificações.
+O **Library Management API** representa as principais operações de uma biblioteca real. O sistema permite controlar o catálogo de livros, exemplares físicos, usuários, funcionários, empréstimos, devoluções, renovações, reservas, multas e notificações.
 
-A aplicação foi construída com foco em boas práticas de desenvolvimento back-end, separação de responsabilidades, segurança, persistência relacional, validação de dados, tratamento padronizado de erros e execução reproduzível com Docker.
+O projeto foi desenvolvido para demonstrar conhecimentos em:
 
-## 📑 Sumário
+- Desenvolvimento de APIs REST com Java.
+- Arquitetura em camadas.
+- Autenticação e autorização com JWT.
+- Regras de negócio e controle transacional.
+- Modelagem e persistência com PostgreSQL.
+- Migrations com Flyway.
+- Validação e tratamento global de erros.
+- Containerização com Docker.
+- Documentação com Swagger/OpenAPI.
+- Deploy de uma aplicação Spring Boot em ambiente cloud.
 
-- [Funcionalidades](#-funcionalidades)
-- [Perfis e permissões](#-perfis-e-permissões)
-- [Regras de negócio](#-regras-de-negócio)
-- [Tecnologias](#-tecnologias)
-- [Arquitetura](#-arquitetura)
-- [Modelo de dados](#-modelo-de-dados)
-- [Como executar com Docker](#-como-executar-com-docker)
-- [Como executar sem Docker](#-como-executar-sem-docker)
-- [Autenticação](#-autenticação)
-- [Endpoints](#-endpoints)
-- [Exemplos de uso](#-exemplos-de-uso)
-- [Variáveis de ambiente](#-variáveis-de-ambiente)
-- [Testes e integração contínua](#-testes-e-integração-contínua)
-- [Estrutura do projeto](#-estrutura-do-projeto)
-- [Documentação complementar](#-documentação-complementar)
-- [Roadmap](#-roadmap)
-- [Licença](#-licença)
-- [Autor](#-autor)
+---
 
 ## ✨ Funcionalidades
 
-- Autenticação stateless com **JWT Access Token** e **Refresh Token**.
-- Autorização baseada nos perfis `ADMIN`, `LIBRARIAN` e `MEMBER`.
+### Segurança e usuários
+
+- Autenticação stateless com **Access Token** e **Refresh Token**.
+- Senhas armazenadas com hash seguro.
+- Controle de acesso por perfis:
+  - `ADMIN`
+  - `LIBRARIAN`
+  - `MEMBER`
 - Cadastro público de membros.
-- Administração de funcionários e status de acesso.
+- Cadastro e gerenciamento de funcionários.
+- Consulta do perfil do usuário autenticado.
+
+### Catálogo
+
 - Cadastro, consulta, edição e desativação de livros.
-- Controle individual de exemplares por código de inventário.
-- Busca de livros por título, autor, ISBN, categoria e disponibilidade.
-- Cadastro, consulta, atualização e bloqueio de membros.
-- Registro de empréstimos com prazo configurável.
-- Devolução com cálculo automático de multa por atraso.
-- Renovação de empréstimos com validação de prazo e reservas pendentes.
-- Fila de reservas por ordem de solicitação.
-- Separação automática de exemplares para o próximo membro da fila.
-- Expiração automática de reservas não retiradas.
-- Notificações internas de vencimento, atraso, multa e reserva disponível.
-- Processamento diário de prazos com `@Scheduled`.
-- Paginação e filtros nas principais consultas.
-- Migrations do banco de dados com Flyway.
-- Documentação interativa com Swagger/OpenAPI.
-- Health check com Spring Boot Actuator.
-- Collection do Postman pronta para importação.
-- Pipeline de integração contínua com GitHub Actions.
+- Controle individual de exemplares físicos.
+- Código de inventário único para cada exemplar.
+- Busca com filtros e paginação.
+- Controle de disponibilidade e estado dos exemplares.
+
+### Empréstimos e devoluções
+
+- Registro de empréstimos.
+- Prazo de devolução configurável.
+- Limite de empréstimos simultâneos por membro.
+- Renovação com validação das regras de negócio.
+- Registro de devolução.
+- Atualização automática da disponibilidade do exemplar.
 - Proteção contra empréstimos simultâneos do mesmo exemplar.
+
+### Reservas
+
+- Fila de reservas por ordem de solicitação.
+- Proteção contra reservas duplicadas.
+- Separação automática de exemplar para o próximo membro.
+- Prazo configurável para retirada.
+- Cancelamento e expiração de reservas.
+
+### Multas e notificações
+
+- Cálculo automático de multa por atraso.
+- Pagamento e cancelamento de multas.
+- Bloqueio de operações quando o limite de multas for excedido.
+- Notificações de:
+  - vencimento próximo;
+  - empréstimo atrasado;
+  - multa gerada;
+  - reserva disponível;
+  - reserva expirada.
+
+### Administração
+
+- Processamento automático de prazos com `@Scheduled`.
+- Execução manual da rotina de manutenção por administrador.
+- Health check com Spring Boot Actuator.
+- Documentação interativa com Swagger.
+- Collection do Postman.
+- Pipeline de integração contínua com GitHub Actions.
+
+---
 
 ## 👥 Perfis e permissões
 
-| Perfil | Permissões principais |
+| Perfil | Permissões |
 |---|---|
-| `ADMIN` | Acesso administrativo completo, gerenciamento de funcionários, livros, membros, empréstimos, multas e tarefas manuais. |
-| `LIBRARIAN` | Gerenciamento de catálogo, membros, empréstimos, devoluções, reservas e pagamentos de multas. |
+| `ADMIN` | Acesso administrativo completo, funcionários, catálogo, membros, empréstimos, multas e rotinas manuais. |
+| `LIBRARIAN` | Gerenciamento do catálogo, membros, empréstimos, devoluções, reservas e pagamentos de multas. |
 | `MEMBER` | Consulta do catálogo, reservas próprias, empréstimos próprios, renovações, multas e notificações. |
 
-## 📏 Regras de negócio
+---
 
-- O membro precisa estar com status `ACTIVE` para realizar empréstimos ou reservas.
-- Cada membro possui um limite configurável de empréstimos simultâneos.
-- Membros com empréstimos atrasados não podem realizar novos empréstimos nem renovações.
+## 📏 Principais regras de negócio
+
+- O membro deve estar com status `ACTIVE`.
+- Cada membro possui um limite de empréstimos simultâneos.
+- Um exemplar não pode ter dois empréstimos ativos.
+- Membros com empréstimos atrasados não podem realizar novos empréstimos.
 - Multas pendentes acima do limite configurado bloqueiam novos empréstimos e renovações.
-- O prazo padrão de empréstimo é de **14 dias**, podendo ser informado entre **1 e 60 dias**.
-- Cada empréstimo pode ser renovado até **2 vezes**, desde que não esteja vencido e não existam reservas pendentes para o livro.
-- Um exemplar não pode possuir mais de um empréstimo ativo ao mesmo tempo.
+- O prazo padrão de empréstimo é de **14 dias**.
+- O empréstimo pode ser renovado até **2 vezes**.
+- Não é possível renovar um empréstimo vencido.
+- Não é possível renovar quando outro membro está aguardando o livro.
+- Reservas são organizadas em fila.
 - Um membro não pode possuir duas reservas ativas para o mesmo livro.
-- Reservas só podem ser feitas quando não há exemplares disponíveis.
-- Quando um exemplar é devolvido, ele é destinado ao primeiro membro da fila de reservas.
-- Uma reserva pronta permanece disponível por **48 horas**.
-- Devoluções atrasadas geram multa diária de **R$ 2,00** por exemplar.
-- O processamento automático de prazos ocorre diariamente às **08:00**, no fuso `America/Maceio`.
+- Uma reserva disponível permanece separada por **48 horas**.
+- Devoluções atrasadas geram multa diária.
+- O processamento de prazos ocorre automaticamente pelo scheduler.
 
-Os valores acima podem ser alterados por variáveis de ambiente.
+Os valores podem ser alterados através de variáveis de ambiente.
+
+---
 
 ## 🛠 Tecnologias
 
@@ -101,43 +152,59 @@ Os valores acima podem ser alterados por variáveis de ambiente.
 | Linguagem | Java 21 |
 | Framework | Spring Boot 3.5 |
 | API REST | Spring Web MVC |
+| Segurança | Spring Security e JWT |
 | Persistência | Spring Data JPA / Hibernate |
-| Segurança | Spring Security, OAuth2 Resource Server e JWT |
-| Banco de dados | PostgreSQL 17 |
+| Banco de dados | PostgreSQL |
 | Migrations | Flyway |
 | Validação | Jakarta Bean Validation |
 | Documentação | Springdoc OpenAPI / Swagger UI |
 | Build | Maven |
 | Containers | Docker e Docker Compose |
-| Testes | JUnit 5, Spring Boot Test, Spring Security Test e H2 |
+| Testes | JUnit 5, Spring Boot Test e H2 |
 | CI | GitHub Actions |
+| Deploy | Render |
+| PostgreSQL em produção | Neon |
 | Produtividade | Lombok |
+
+---
 
 ## 🏗 Arquitetura
 
-A aplicação segue uma arquitetura em camadas:
+### Arquitetura da aplicação
 
 ```mermaid
-graph LR
-    A[Cliente / Swagger / Postman] --> B[Controllers]
-    B --> C[Services]
-    C --> D[Repositories]
-    D --> E[(PostgreSQL)]
-
-    F[Spring Security + JWT] --> B
-    G[Scheduler] --> C
-    C --> H[Notificações]
-    I[Flyway] --> E
+flowchart LR
+    CLIENT[Cliente / Front-end / Swagger] --> CONTROLLERS[Controllers REST]
+    CONTROLLERS --> SECURITY[Spring Security + JWT]
+    CONTROLLERS --> SERVICES[Services]
+    SERVICES --> REPOSITORIES[Repositories JPA]
+    REPOSITORIES --> DATABASE[(PostgreSQL)]
+    SCHEDULER[Scheduler] --> SERVICES
+    FLYWAY[Flyway] --> DATABASE
 ```
 
-### Responsabilidades
+### Arquitetura em produção
 
-- **Controllers:** exposição dos endpoints HTTP e validação das requisições.
-- **Services:** regras de negócio e controle transacional.
-- **Repositories:** acesso aos dados com Spring Data JPA.
+```mermaid
+flowchart LR
+    USER[Usuário] -->|HTTPS| RENDER[Render]
+    RENDER --> API[Spring Boot API]
+    API -->|SSL| NEON[(Neon PostgreSQL)]
+    GITHUB[GitHub] -->|Deploy automático| RENDER
+```
+
+### Organização em camadas
+
+- **Controller:** exposição dos endpoints HTTP.
+- **Service:** regras de negócio e controle transacional.
+- **Repository:** acesso ao banco com Spring Data JPA.
+- **Domain:** entidades e enums do domínio.
 - **Security:** autenticação JWT e autorização por perfil.
-- **Scheduler:** processamento automático de prazos, atrasos e reservas expiradas.
-- **Flyway:** criação e versionamento do esquema do banco.
+- **Scheduler:** processamento automático de prazos.
+- **Exception:** tratamento padronizado de erros.
+- **Migration:** versionamento da estrutura do banco.
+
+---
 
 ## 🗃 Modelo de dados
 
@@ -155,138 +222,48 @@ erDiagram
     LOANS ||--o| FINES : gera
 ```
 
-Principais estados do domínio:
+### Estados principais
 
 | Entidade | Estados |
 |---|---|
+| Membro | `ACTIVE`, `BLOCKED`, `INACTIVE` |
 | Exemplar | `AVAILABLE`, `LOANED`, `RESERVED`, `LOST`, `DAMAGED`, `MAINTENANCE` |
 | Empréstimo | `ACTIVE`, `RETURNED`, `OVERDUE`, `LOST` |
 | Reserva | `WAITING`, `READY`, `FULFILLED`, `CANCELLED`, `EXPIRED` |
 | Multa | `PENDING`, `PAID`, `CANCELLED` |
-| Membro | `ACTIVE`, `BLOCKED`, `INACTIVE` |
 
-## 🐳 Como executar com Docker
-
-### Pré-requisitos
-
-- Git
-- Docker Desktop ou Docker Engine
-- Docker Compose
-
-### 1. Clone o repositório
-
-```bash
-git clone https://github.com/developercarloslima/library-management-api.git
-cd library-management-api
-```
-
-### 2. Crie o arquivo de ambiente
-
-Linux ou macOS:
-
-```bash
-cp .env.example .env
-```
-
-Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-### 3. Inicie os containers
-
-```bash
-docker compose up --build
-```
-
-Para iniciar em segundo plano:
-
-```bash
-docker compose up --build -d
-```
-
-### 4. Acesse a aplicação
-
-| Serviço | Endereço |
-|---|---|
-| API | `http://localhost:8080` |
-| Swagger UI | `http://localhost:8080/swagger-ui.html` |
-| OpenAPI JSON | `http://localhost:8080/v3/api-docs` |
-| Health check | `http://localhost:8080/actuator/health` |
-| PostgreSQL | `localhost:5432` |
-
-### Comandos úteis
-
-```bash
-# Visualizar os containers
-docker compose ps
-
-# Acompanhar os logs da API
-docker compose logs -f api
-
-# Parar os containers
-docker compose down
-
-# Parar e apagar o volume do banco
-docker compose down -v
-```
-
-> [!WARNING]
-> O comando `docker compose down -v` remove permanentemente todos os dados cadastrados no banco local.
-
-## 💻 Como executar sem Docker
-
-### Pré-requisitos
-
-- Java 21
-- Maven 3.6 ou superior
-- PostgreSQL
-
-Crie um banco chamado `library_db` e defina as variáveis de ambiente necessárias.
-
-Linux ou macOS:
-
-```bash
-export DB_URL=jdbc:postgresql://localhost:5432/library_db
-export DB_USERNAME=library
-export DB_PASSWORD=library
-export APP_JWT_SECRET=uma-chave-segura-com-pelo-menos-32-caracteres
-mvn spring-boot:run
-```
-
-Windows PowerShell:
-
-```powershell
-$env:DB_URL="jdbc:postgresql://localhost:5432/library_db"
-$env:DB_USERNAME="library"
-$env:DB_PASSWORD="library"
-$env:APP_JWT_SECRET="uma-chave-segura-com-pelo-menos-32-caracteres"
-mvn spring-boot:run
-```
+---
 
 ## 🔐 Autenticação
 
-Na primeira inicialização, a aplicação cria automaticamente um administrador, caso o e-mail configurado ainda não exista.
+A API utiliza JWT. O fluxo de autenticação é:
 
-| Campo | Valor padrão |
-|---|---|
-| E-mail | `admin@library.local` |
-| Senha | `Admin@123456` |
+```text
+Login
+  ↓
+Validação do e-mail e da senha
+  ↓
+Geração do Access Token e Refresh Token
+  ↓
+Envio do Access Token no header Authorization
+  ↓
+Validação do token pelo Spring Security
+  ↓
+Autorização de acordo com o perfil
+```
 
-> [!CAUTION]
-> As credenciais padrão são destinadas apenas ao ambiente local. Altere `ADMIN_EMAIL`, `ADMIN_PASSWORD` e `APP_JWT_SECRET` antes de publicar ou implantar a aplicação.
+### Login
 
-### Realizar login
+```http
+POST /api/auth/login
+Content-Type: application/json
+```
 
-```bash
-curl --request POST \
-  --url http://localhost:8080/api/auth/login \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "email": "admin@library.local",
-    "password": "Admin@123456"
-  }'
+```json
+{
+  "email": "admin@example.com",
+  "password": "sua-senha"
+}
 ```
 
 Exemplo de resposta:
@@ -300,19 +277,24 @@ Exemplo de resposta:
 }
 ```
 
-Envie o `accessToken` nas requisições protegidas:
+Nas rotas protegidas:
 
 ```http
 Authorization: Bearer SEU_ACCESS_TOKEN
 ```
 
-### Autorizar pelo Swagger
+### Autorização pelo Swagger
 
-1. Acesse `http://localhost:8080/swagger-ui.html`.
-2. Execute `POST /api/auth/login`.
-3. Copie o valor de `accessToken`.
-4. Clique em **Authorize**.
-5. Cole o token no campo de autenticação.
+1. Execute `POST /api/auth/login`.
+2. Copie o valor de `accessToken`.
+3. Clique em **Authorize**, no topo do Swagger.
+4. Cole o token.
+5. Confirme a autorização.
+
+> [!CAUTION]
+> As credenciais de produção não são disponibilizadas neste repositório. Configure `ADMIN_EMAIL`, `ADMIN_PASSWORD` e `APP_JWT_SECRET` através das variáveis de ambiente.
+
+---
 
 ## 🌐 Endpoints
 
@@ -322,40 +304,29 @@ Authorization: Bearer SEU_ACCESS_TOKEN
 |---|---|---|---|
 | `POST` | `/api/auth/register` | Público | Cadastra um novo membro. |
 | `POST` | `/api/auth/login` | Público | Autentica um usuário. |
-| `POST` | `/api/auth/refresh` | Público | Gera novos tokens a partir do refresh token. |
+| `POST` | `/api/auth/refresh` | Público | Gera novos tokens. |
 | `GET` | `/api/me` | Autenticado | Retorna o perfil do usuário autenticado. |
 
 ### Funcionários
 
 | Método | Endpoint | Acesso | Descrição |
 |---|---|---|---|
-| `POST` | `/api/staff` | `ADMIN` | Cadastra administrador ou bibliotecário. |
+| `POST` | `/api/staff` | `ADMIN` | Cadastra um funcionário. |
 | `GET` | `/api/staff` | `ADMIN` | Lista funcionários. |
-| `PATCH` | `/api/staff/{id}/status` | `ADMIN` | Ativa ou desativa um funcionário. |
+| `PATCH` | `/api/staff/{id}/status` | `ADMIN` | Altera o status de um funcionário. |
 
 ### Livros e exemplares
 
 | Método | Endpoint | Acesso | Descrição |
 |---|---|---|---|
-| `GET` | `/api/books` | Autenticado | Pesquisa livros com filtros e paginação. |
+| `GET` | `/api/books` | Autenticado | Lista e pesquisa livros. |
 | `GET` | `/api/books/{id}` | Autenticado | Consulta um livro. |
 | `POST` | `/api/books` | `ADMIN`, `LIBRARIAN` | Cadastra um livro. |
 | `PUT` | `/api/books/{id}` | `ADMIN`, `LIBRARIAN` | Atualiza um livro. |
 | `DELETE` | `/api/books/{id}` | `ADMIN` | Desativa um livro. |
 | `POST` | `/api/books/{bookId}/copies` | `ADMIN`, `LIBRARIAN` | Cadastra um exemplar. |
-| `GET` | `/api/books/{bookId}/copies` | Autenticado | Lista os exemplares de um livro. |
-| `PATCH` | `/api/books/copies/{copyId}/status` | `ADMIN`, `LIBRARIAN` | Atualiza o estado de um exemplar. |
-
-Filtros disponíveis em `GET /api/books`:
-
-```text
-query=java
-category=Tecnologia
-availableOnly=true
-page=0
-size=20
-sort=title,asc
-```
+| `GET` | `/api/books/{bookId}/copies` | Autenticado | Lista exemplares. |
+| `PATCH` | `/api/books/copies/{copyId}/status` | `ADMIN`, `LIBRARIAN` | Altera o estado do exemplar. |
 
 ### Membros
 
@@ -365,18 +336,18 @@ sort=title,asc
 | `GET` | `/api/members` | `ADMIN`, `LIBRARIAN` | Lista membros. |
 | `GET` | `/api/members/{id}` | `ADMIN`, `LIBRARIAN` | Consulta um membro. |
 | `PUT` | `/api/members/{id}` | `ADMIN`, `LIBRARIAN` | Atualiza um membro. |
-| `PATCH` | `/api/members/{id}/status` | `ADMIN`, `LIBRARIAN` | Altera o status de um membro. |
+| `PATCH` | `/api/members/{id}/status` | `ADMIN`, `LIBRARIAN` | Altera o status. |
 
 ### Empréstimos
 
 | Método | Endpoint | Acesso | Descrição |
 |---|---|---|---|
 | `POST` | `/api/loans` | `ADMIN`, `LIBRARIAN` | Registra um empréstimo. |
-| `POST` | `/api/loans/{id}/return` | `ADMIN`, `LIBRARIAN` | Registra a devolução e calcula multa. |
-| `POST` | `/api/loans/{id}/renew` | Autenticado | Renova um empréstimo permitido. |
-| `GET` | `/api/loans/{id}` | Autenticado | Consulta um empréstimo permitido ao usuário. |
-| `GET` | `/api/loans` | `ADMIN`, `LIBRARIAN` | Lista empréstimos com filtros. |
-| `GET` | `/api/loans/mine` | `MEMBER` | Lista os empréstimos do membro autenticado. |
+| `GET` | `/api/loans` | `ADMIN`, `LIBRARIAN` | Lista empréstimos. |
+| `GET` | `/api/loans/{id}` | Autenticado | Consulta um empréstimo. |
+| `GET` | `/api/loans/mine` | `MEMBER` | Lista empréstimos do membro. |
+| `POST` | `/api/loans/{id}/return` | `ADMIN`, `LIBRARIAN` | Registra a devolução. |
+| `POST` | `/api/loans/{id}/renew` | Autenticado | Renova um empréstimo. |
 
 ### Reservas
 
@@ -384,125 +355,280 @@ sort=title,asc
 |---|---|---|---|
 | `POST` | `/api/reservations` | Autenticado | Cria uma reserva. |
 | `GET` | `/api/reservations` | `ADMIN`, `LIBRARIAN` | Lista reservas. |
-| `GET` | `/api/reservations/mine` | `MEMBER` | Lista as reservas do membro autenticado. |
-| `DELETE` | `/api/reservations/{id}` | Proprietário ou funcionário | Cancela uma reserva ativa. |
+| `GET` | `/api/reservations/mine` | `MEMBER` | Lista reservas do membro. |
+| `DELETE` | `/api/reservations/{id}` | Autorizado | Cancela uma reserva. |
 
 ### Multas
 
 | Método | Endpoint | Acesso | Descrição |
 |---|---|---|---|
 | `GET` | `/api/fines` | `ADMIN`, `LIBRARIAN` | Lista multas. |
-| `GET` | `/api/fines/mine` | `MEMBER` | Lista as multas do membro autenticado. |
-| `POST` | `/api/fines/{id}/pay` | `ADMIN`, `LIBRARIAN` | Registra o pagamento de uma multa. |
+| `GET` | `/api/fines/mine` | `MEMBER` | Lista multas do membro. |
+| `POST` | `/api/fines/{id}/pay` | `ADMIN`, `LIBRARIAN` | Registra o pagamento. |
 | `POST` | `/api/fines/{id}/cancel` | `ADMIN` | Cancela uma multa. |
 
 ### Notificações e manutenção
 
 | Método | Endpoint | Acesso | Descrição |
 |---|---|---|---|
-| `GET` | `/api/notifications` | Autenticado | Lista as notificações do usuário. |
-| `PATCH` | `/api/notifications/{id}/read` | Autenticado | Marca uma notificação como lida. |
-| `PATCH` | `/api/notifications/read-all` | Autenticado | Marca todas as notificações como lidas. |
-| `POST` | `/api/admin/tasks/process-deadlines` | `ADMIN` | Executa manualmente o processamento de prazos. |
+| `GET` | `/api/notifications` | Autenticado | Lista notificações. |
+| `PATCH` | `/api/notifications/{id}/read` | Autenticado | Marca como lida. |
+| `PATCH` | `/api/notifications/read-all` | Autenticado | Marca todas como lidas. |
+| `POST` | `/api/admin/tasks/process-deadlines` | `ADMIN` | Processa prazos manualmente. |
 
-## 🧪 Exemplos de uso
+A especificação completa está disponível no [Swagger em produção](https://library-management-api-pcjj.onrender.com/swagger-ui/index.html).
 
-### Cadastrar um livro
+---
 
-```bash
-curl --request POST \
-  --url http://localhost:8080/api/books \
-  --header 'Authorization: Bearer SEU_ACCESS_TOKEN' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "title": "Código Limpo",
-    "isbn": "9788576082675",
-    "author": "Robert C. Martin",
-    "publisher": "Alta Books",
-    "publicationYear": 2009,
-    "category": "Engenharia de Software",
-    "description": "Boas práticas para escrita de código legível e sustentável."
-  }'
+## 🧪 Exemplo de fluxo
+
+### 1. Cadastrar um livro
+
+```http
+POST /api/books
+Authorization: Bearer SEU_ACCESS_TOKEN
+Content-Type: application/json
 ```
 
-### Cadastrar um exemplar
-
-```bash
-curl --request POST \
-  --url http://localhost:8080/api/books/ID_DO_LIVRO/copies \
-  --header 'Authorization: Bearer SEU_ACCESS_TOKEN' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "inventoryCode": "BOOK-0001",
-    "acquisitionDate": "2026-07-15"
-  }'
+```json
+{
+  "title": "Código Limpo",
+  "isbn": "9788576082675",
+  "author": "Robert C. Martin",
+  "publisher": "Alta Books",
+  "publicationYear": 2009,
+  "category": "Engenharia de Software",
+  "description": "Boas práticas para escrita de código legível e sustentável."
+}
 ```
 
-### Cadastrar um membro
+### 2. Cadastrar um exemplar
 
-```bash
-curl --request POST \
-  --url http://localhost:8080/api/members \
-  --header 'Authorization: Bearer SEU_ACCESS_TOKEN' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "name": "Maria Silva",
-    "email": "maria@example.com",
-    "password": "Senha@123",
-    "phone": "82999999999",
-    "maximumLoans": 3
-  }'
+```http
+POST /api/books/{bookId}/copies
+Authorization: Bearer SEU_ACCESS_TOKEN
+Content-Type: application/json
 ```
 
-### Registrar um empréstimo
+```json
+{
+  "inventoryCode": "BOOK-0001",
+  "acquisitionDate": "2026-07-15"
+}
+```
+
+### 3. Cadastrar um membro
+
+```http
+POST /api/members
+Authorization: Bearer SEU_ACCESS_TOKEN
+Content-Type: application/json
+```
+
+```json
+{
+  "name": "Maria Silva",
+  "email": "maria@example.com",
+  "password": "Senha@123",
+  "phone": "82999999999",
+  "maximumLoans": 3
+}
+```
+
+### 4. Registrar o empréstimo
+
+```http
+POST /api/loans
+Authorization: Bearer SEU_ACCESS_TOKEN
+Content-Type: application/json
+```
+
+```json
+{
+  "memberId": "ID_DO_MEMBRO",
+  "bookCopyId": "ID_DO_EXEMPLAR",
+  "loanDays": 14
+}
+```
+
+---
+
+## 🐳 Executando com Docker
+
+### Pré-requisitos
+
+- Git
+- Docker
+- Docker Compose
+
+### Clone o repositório
 
 ```bash
-curl --request POST \
-  --url http://localhost:8080/api/loans \
-  --header 'Authorization: Bearer SEU_ACCESS_TOKEN' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "memberId": "ID_DO_MEMBRO",
-    "bookCopyId": "ID_DO_EXEMPLAR",
-    "loanDays": 14
-  }'
+git clone https://github.com/developercarloslima/library-management-api.git
+cd library-management-api
 ```
+
+### Crie o arquivo `.env`
+
+Linux ou macOS:
+
+```bash
+cp .env.example .env
+```
+
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+### Inicie os containers
+
+```bash
+docker compose up --build
+```
+
+Em segundo plano:
+
+```bash
+docker compose up --build -d
+```
+
+### Endereços locais
+
+| Serviço | Endereço |
+|---|---|
+| API | `http://localhost:8080` |
+| Swagger | `http://localhost:8080/swagger-ui/index.html` |
+| OpenAPI | `http://localhost:8080/v3/api-docs` |
+| Health Check | `http://localhost:8080/actuator/health` |
+| PostgreSQL | `localhost:5432` |
+
+### Comandos úteis
+
+```bash
+# Ver containers
+docker compose ps
+
+# Acompanhar logs
+docker compose logs -f api
+
+# Reiniciar
+docker compose restart
+
+# Parar containers
+docker compose down
+```
+
+> [!WARNING]
+> `docker compose down -v` também apaga o volume e todos os dados do PostgreSQL local.
+
+---
+
+## 💻 Executando sem Docker
+
+### Pré-requisitos
+
+- Java 21
+- Maven
+- PostgreSQL
+
+Crie um banco chamado `library_db` e configure as variáveis.
+
+Linux ou macOS:
+
+```bash
+export DB_URL=jdbc:postgresql://localhost:5432/library_db
+export DB_USERNAME=library
+export DB_PASSWORD=library
+export APP_JWT_SECRET=uma-chave-segura-com-pelo-menos-32-caracteres
+
+mvn spring-boot:run
+```
+
+Windows PowerShell:
+
+```powershell
+$env:DB_URL="jdbc:postgresql://localhost:5432/library_db"
+$env:DB_USERNAME="library"
+$env:DB_PASSWORD="library"
+$env:APP_JWT_SECRET="uma-chave-segura-com-pelo-menos-32-caracteres"
+
+mvn spring-boot:run
+```
+
+---
 
 ## ⚙️ Variáveis de ambiente
 
-| Variável | Valor padrão | Descrição |
+| Variável | Padrão local | Descrição |
 |---|---|---|
 | `DB_URL` | `jdbc:postgresql://postgres:5432/library_db` | URL JDBC do PostgreSQL. |
 | `DB_USERNAME` | `library` | Usuário do banco. |
 | `DB_PASSWORD` | `library` | Senha do banco. |
-| `APP_JWT_SECRET` | Chave de desenvolvimento | Segredo HMAC do JWT, com no mínimo 32 caracteres. |
-| `JWT_ACCESS_MINUTES` | `30` | Validade do access token em minutos. |
-| `JWT_REFRESH_DAYS` | `7` | Validade do refresh token em dias. |
+| `APP_JWT_SECRET` | Desenvolvimento | Segredo de assinatura do JWT. |
+| `JWT_ACCESS_MINUTES` | `30` | Validade do access token. |
+| `JWT_REFRESH_DAYS` | `7` | Validade do refresh token. |
 | `ADMIN_NAME` | `Administrador` | Nome do administrador inicial. |
-| `ADMIN_EMAIL` | `admin@library.local` | E-mail do administrador inicial. |
-| `ADMIN_PASSWORD` | `Admin@123456` | Senha do administrador inicial. |
-| `SERVER_PORT` | `8080` | Porta HTTP da API. |
-| `DEFAULT_LOAN_DAYS` | `14` | Prazo padrão dos empréstimos. |
-| `MAX_RENEWALS` | `2` | Quantidade máxima de renovações. |
-| `RESERVATION_HOLD_HOURS` | `48` | Prazo para retirada de uma reserva pronta. |
-| `DUE_SOON_DAYS` | `2` | Antecedência da notificação de vencimento. |
-| `DAILY_FINE` | `2.00` | Valor da multa por dia de atraso. |
-| `MAX_UNPAID_FINE` | `20.00` | Limite de multas pendentes para bloqueio. |
-| `DEADLINES_CRON` | `0 0 8 * * *` | Expressão cron do processamento de prazos. |
+| `ADMIN_EMAIL` | `admin@library.local` | E-mail inicial local. |
+| `ADMIN_PASSWORD` | `Admin@123456` | Senha inicial local. |
+| `SERVER_PORT` | `8080` | Porta HTTP da aplicação. |
+| `DEFAULT_LOAN_DAYS` | `14` | Prazo padrão de empréstimo. |
+| `MAX_RENEWALS` | `2` | Máximo de renovações. |
+| `RESERVATION_HOLD_HOURS` | `48` | Prazo de retirada da reserva. |
+| `DUE_SOON_DAYS` | `2` | Antecedência do aviso. |
+| `DAILY_FINE` | `2.00` | Multa diária. |
+| `MAX_UNPAID_FINE` | `20.00` | Limite de multas pendentes. |
+| `DEADLINES_CRON` | `0 0 8 * * *` | Agendamento do processamento. |
 | `SCHEDULER_ZONE` | `America/Maceio` | Fuso horário do scheduler. |
 
-> [!NOTE]
-> O administrador inicial só é criado quando ainda não existe um usuário com o e-mail configurado. Para recriar o banco local com novas credenciais, execute `docker compose down -v` e suba os containers novamente.
+> [!IMPORTANT]
+> O arquivo `.env` não deve ser enviado para o GitHub. O repositório deve conter somente o `.env.example`, sem senhas ou segredos reais.
+
+---
+
+## ☁️ Deploy
+
+O ambiente de produção utiliza:
+
+```text
+GitHub → Render → Spring Boot → Neon PostgreSQL
+```
+
+No Render, são configuradas as variáveis de ambiente do banco, JWT, administrador, porta e regras do sistema.
+
+Configurações importantes para o ambiente gratuito:
+
+```env
+SERVER_PORT=10000
+JAVA_TOOL_OPTIONS=-Xmx300m -XX:+UseSerialGC
+SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=5
+SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=0
+```
+
+O banco Neon utiliza uma URL JDBC com SSL:
+
+```text
+jdbc:postgresql://HOST_DO_NEON/neondb?sslmode=require
+```
+
+As migrations Flyway são executadas automaticamente na inicialização.
+
+---
 
 ## ✅ Testes e integração contínua
 
-Execute os testes localmente:
+Execute os testes:
 
 ```bash
 mvn clean verify
 ```
 
-O perfil de testes utiliza banco H2 em memória. O workflow localizado em `.github/workflows/ci.yml` executa o build e os testes automaticamente em pushes para `main`, `master` e `develop`, além de pull requests.
+O projeto possui configuração de testes com JUnit, Spring Boot Test e banco H2 em memória.
+
+O workflow `.github/workflows/ci.yml` executa automaticamente o build e os testes nos pushes e pull requests configurados.
+
+---
 
 ## 📂 Estrutura do projeto
 
@@ -521,8 +647,6 @@ library-management-api/
 │   │   │   ├── config/
 │   │   │   ├── controller/
 │   │   │   ├── domain/
-│   │   │   │   ├── entity/
-│   │   │   │   └── enums/
 │   │   │   ├── dto/
 │   │   │   ├── exception/
 │   │   │   ├── repository/
@@ -540,53 +664,40 @@ library-management-api/
 └── README.md
 ```
 
+---
+
 ## 📚 Documentação complementar
 
-- **Swagger UI:** disponível em `/swagger-ui.html` com a aplicação em execução.
-- **OpenAPI:** especificação JSON disponível em `/v3/api-docs`.
-- **Postman:** importe `postman/Library-Management-API.postman_collection.json`.
-- **Modelo de dados:** consulte `docs/ERD.md`.
-- **Migration inicial:** consulte `src/main/resources/db/migration/V1__create_schema.sql`.
+- Swagger UI: `/swagger-ui/index.html`
+- OpenAPI JSON: `/v3/api-docs`
+- Collection Postman: `postman/Library-Management-API.postman_collection.json`
+- Modelo de dados: `docs/ERD.md`
+- Migration inicial: `src/main/resources/db/migration/V1__create_schema.sql`
+
+---
 
 ## 🚀 Roadmap
 
+- [x] API REST.
+- [x] Autenticação JWT.
+- [x] Perfis e permissões.
+- [x] PostgreSQL.
+- [x] Docker e Docker Compose.
+- [x] Flyway.
+- [x] Swagger/OpenAPI.
+- [x] Scheduler.
+- [x] Deploy no Render.
+- [x] Banco em produção no Neon.
 - [ ] Notificações por e-mail.
 - [ ] Testes de integração com Testcontainers.
 - [ ] Cobertura de testes com JaCoCo.
 - [ ] Logs estruturados e observabilidade.
 - [ ] Dashboard administrativo front-end.
 - [ ] Upload de capas dos livros.
-- [ ] Relatórios de livros mais emprestados e membros inadimplentes.
-- [ ] Deploy automatizado em ambiente cloud.
+- [ ] Relatórios e indicadores.
 
-## 🤝 Contribuição
+---
 
-Contribuições são bem-vindas.
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua alteração:
-
-```bash
-git checkout -b feature/minha-funcionalidade
-```
-
-3. Faça o commit:
-
-```bash
-git commit -m "feat: adiciona nova funcionalidade"
-```
-
-4. Envie a branch:
-
-```bash
-git push origin feature/minha-funcionalidade
-```
-
-5. Abra um Pull Request.
-
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais informações.
 
 ## 👨‍💻 Autor
 
@@ -598,6 +709,9 @@ Desenvolvido por **Carlos Lima**.
 
 <div align="center">
 
-Projeto desenvolvido para demonstrar conhecimentos em **Java, Spring Boot, APIs REST, segurança JWT, PostgreSQL e Docker**.
+Projeto desenvolvido para demonstrar conhecimentos em  
+**Java, Spring Boot, APIs REST, Spring Security, JWT, PostgreSQL, Docker e Cloud Deploy**.
+
+⭐ Caso o projeto tenha sido útil, considere deixar uma estrela no repositório.
 
 </div>
