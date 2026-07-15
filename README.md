@@ -676,29 +676,6 @@ library-management-api/
 
 ---
 
-## 🚀 Roadmap
-
-- [x] API REST.
-- [x] Autenticação JWT.
-- [x] Perfis e permissões.
-- [x] PostgreSQL.
-- [x] Docker e Docker Compose.
-- [x] Flyway.
-- [x] Swagger/OpenAPI.
-- [x] Scheduler.
-- [x] Deploy no Render.
-- [x] Banco em produção no Neon.
-- [ ] Notificações por e-mail.
-- [ ] Testes de integração com Testcontainers.
-- [ ] Cobertura de testes com JaCoCo.
-- [ ] Logs estruturados e observabilidade.
-- [ ] Dashboard administrativo front-end.
-- [ ] Upload de capas dos livros.
-- [ ] Relatórios e indicadores.
-
----
-
-
 ## 👨‍💻 Autor
 
 Desenvolvido por **Carlos Lima**.
