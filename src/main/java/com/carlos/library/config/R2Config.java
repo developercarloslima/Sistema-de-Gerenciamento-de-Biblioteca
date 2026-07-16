@@ -16,6 +16,7 @@ import java.net.URI;
 @Configuration
 @ConditionalOnProperty(prefix = "app.storage.r2", name = "enabled", havingValue = "true")
 public class R2Config {
+
     @Bean
     S3Configuration r2S3Configuration() {
         return S3Configuration.builder()
@@ -28,9 +29,10 @@ public class R2Config {
     @Bean(destroyMethod = "close")
     S3Client r2S3Client(StorageProperties properties, S3Configuration configuration) {
         properties.validate();
+
         return S3Client.builder()
                 .endpointOverride(URI.create(properties.endpoint()))
-                .region(Region.of("auto"))
+                .region(Region.of(properties.region()))
                 .credentialsProvider(credentials(properties))
                 .serviceConfiguration(configuration)
                 .httpClientBuilder(UrlConnectionHttpClient.builder())
@@ -40,9 +42,10 @@ public class R2Config {
     @Bean(destroyMethod = "close")
     S3Presigner r2S3Presigner(StorageProperties properties, S3Configuration configuration) {
         properties.validate();
+
         return S3Presigner.builder()
                 .endpointOverride(URI.create(properties.endpoint()))
-                .region(Region.of("auto"))
+                .region(Region.of(properties.region()))
                 .credentialsProvider(credentials(properties))
                 .serviceConfiguration(configuration)
                 .build();

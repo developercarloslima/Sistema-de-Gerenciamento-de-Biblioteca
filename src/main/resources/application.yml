@@ -39,6 +39,7 @@ app:
     r2:
       enabled: ${R2_ENABLED:false}
       endpoint: ${R2_ENDPOINT:}
+      region: ${R2_REGION:us-east-005}
       access-key-id: ${R2_ACCESS_KEY_ID:}
       secret-access-key: ${R2_SECRET_ACCESS_KEY:}
       bucket: ${R2_BUCKET:}
