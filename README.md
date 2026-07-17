@@ -534,6 +534,16 @@ Consulte o guia em [`docs/BACKBLAZE_B2.md`](docs/BACKBLAZE_B2.md).
 - Use HTTPS em todos os ambientes de produção.
 - Troque as credenciais administrativas padrão antes do primeiro deploy.
 
+## Melhorias futuras
+
+- Revogação persistente de refresh tokens.
+- Auditoria detalhada das operações administrativas.
+- Métricas com Prometheus e dashboards no Grafana.
+- Testes de integração com Testcontainers.
+- Conversão opcional de documentos DOCX para PDF.
+- Serviço de e-mail para notificações externas.
+- Cache de consultas com Redis.
+
 ## Autor
 
 Desenvolvido por **Carlos Lima**.

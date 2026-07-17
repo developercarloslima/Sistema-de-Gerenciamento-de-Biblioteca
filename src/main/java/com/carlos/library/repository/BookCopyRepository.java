@@ -15,14 +15,29 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BookCopyRepository extends JpaRepository<BookCopy, UUID> {
+
     boolean existsByInventoryCode(String inventoryCode);
+
     long countByBookId(UUID bookId);
-    long countByBookIdAndStatus(UUID bookId, BookCopyStatus status);
+
+    long countByBookIdAndStatus(
+            UUID bookId,
+            BookCopyStatus status
+    );
 
     @EntityGraph(attributePaths = "book")
-    Page<BookCopy> findByBookId(UUID bookId, Pageable pageable);
+    Page<BookCopy> findByBookId(
+            UUID bookId,
+            Pageable pageable
+    );
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("select c from BookCopy c join fetch c.book where c.id = :id")
-    Optional<BookCopy> findByIdForUpdate(@Param("id") UUID id);
+    @Query("""
+        SELECT copy
+        FROM BookCopy copy
+        WHERE copy.id = :copyId
+    """)
+    Optional<BookCopy> findByIdForUpdate(
+            @Param("copyId") UUID copyId
+    );
 }
