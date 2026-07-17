@@ -38,8 +38,8 @@ public class BookService {
 
     @Transactional(readOnly = true)
     public Page<BookResponse> search(String query, String category, boolean availableOnly, boolean digitalOnly, Pageable pageable) {
-        String q = blankToNull(query);
-        String c = blankToNull(category);
+        String q = normalizeFilter(query);
+        String c = normalizeFilter(category);
         return books.search(q, c, availableOnly, digitalOnly, pageable).map(mapper::book);
     }
 
@@ -115,5 +115,5 @@ public class BookService {
         b.setDescription(r.description()); b.setActive(true);
     }
 
-    private String blankToNull(String value) { return value == null || value.isBlank() ? null : value.trim(); }
+    private String normalizeFilter(String value) { return value == null ? "" : value.trim(); }
 }

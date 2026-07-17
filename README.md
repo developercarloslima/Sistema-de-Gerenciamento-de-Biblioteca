@@ -2,6 +2,8 @@
 
 Sistema back-end completo para gerenciamento de biblioteca, desenvolvido com **Java 21, Spring Boot 3.5, Spring Security/JWT, PostgreSQL, Flyway e Docker**.
 
+> Correção incluída: filtros vazios de busca são enviados como string vazia para evitar `lower(bytea)` no PostgreSQL/Hibernate.
+
 ## Funcionalidades
 
 - Autenticação JWT com access token e refresh token.

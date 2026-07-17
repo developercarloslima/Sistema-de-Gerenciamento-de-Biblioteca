@@ -128,7 +128,7 @@ public class DigitalBookService {
             case LIBRARIAN -> List.of(DigitalAccessLevel.PUBLIC, DigitalAccessLevel.MEMBERS_ONLY, DigitalAccessLevel.STAFF_ONLY);
             case MEMBER -> List.of(DigitalAccessLevel.PUBLIC, DigitalAccessLevel.MEMBERS_ONLY);
         };
-        String normalized = query == null || query.isBlank() ? null : query.trim();
+        String normalized = query == null ? "" : query.trim();
         return books.searchDigitalCatalog(normalized, levels, pageable).map(mapper::book);
     }
 

@@ -15,10 +15,10 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     @Query("""
         select b from Book b
         where b.active = true
-          and (:query is null or lower(b.title) like lower(concat('%', :query, '%'))
-               or lower(b.author) like lower(concat('%', :query, '%'))
-               or lower(b.isbn) like lower(concat('%', :query, '%')))
-          and (:category is null or lower(b.category) = lower(:category))
+          and (:query = '' or lower(b.title) like concat('%', lower(:query), '%')
+               or lower(b.author) like concat('%', lower(:query), '%')
+               or lower(b.isbn) like concat('%', lower(:query), '%'))
+          and (:category = '' or lower(b.category) = lower(:category))
           and (:availableOnly = false or exists (
               select c.id from BookCopy c where c.book = b and c.status = com.carlos.library.domain.enums.BookCopyStatus.AVAILABLE
           ))
@@ -34,9 +34,9 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
         where b.active = true
           and a.assetType = com.carlos.library.domain.enums.BookAssetType.PDF
           and a.accessLevel in :accessLevels
-          and (:query is null or lower(b.title) like lower(concat('%', :query, '%'))
-               or lower(b.author) like lower(concat('%', :query, '%'))
-               or lower(b.isbn) like lower(concat('%', :query, '%')))
+          and (:query = '' or lower(b.title) like concat('%', lower(:query), '%')
+               or lower(b.author) like concat('%', lower(:query), '%')
+               or lower(b.isbn) like concat('%', lower(:query), '%'))
         """)
     Page<Book> searchDigitalCatalog(@Param("query") String query,
                                     @Param("accessLevels") java.util.Collection<com.carlos.library.domain.enums.DigitalAccessLevel> accessLevels,
